@@ -1,0 +1,83 @@
+<div  align="center">
+    <h3>KAPY- Approve Farmer Appplications for seed samplings</h3>
+  </div>
+ <div *ngIf="isFormApproved; then approved else approveForm" ></div>
+   <ng-template #approveForm>
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">Search Criteria</h1>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <div class="col-md-4">
+        <label for="LnRecId" class="control-label required">LandRecord Id :</label>
+        <input type="text" id="LnRecId" name="LnRecId"  [(ngModel)]="LnRecId"  />
+      </div>
+      <div class="col-md-4">
+      <button type="submit" class="btn btn-primary" (click)= "search()">Search</button>
+      </div>
+	   
+    </div>
+    </div>  
+    </div>
+<!--Search results of the farmerReq records for approval -->
+<div *ngIf= "fetchComplete" >
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <th>Enrollment ID</th>
+          <th>LandReord Id</th>
+          <th>Area Of Land </th>
+          <th>No of Seeds Required</th>
+          <th>View details</th>
+		  <!--<th>Approve</th>-->
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let farmerReq of farmerRecords">
+         <!-- <td><a [routerLink] = "['/viewLandRecord', farmerReq.eid]">{{farmerReq.eid}}</a></td>-->
+		  <td>{{farmerReq.eid}}</td>
+          <td>{{farmerReq.LnRecId}}</td>
+          <td>{{farmerReq.AreaOfLand}}</td>
+          <td>{{farmerReq.NoSeedReq}}</td>
+		  <td><a [routerLink] = "['/viewFarmerRecord', farmerReq.eid]">View details</a></td>
+      </tr>
+  </tbody>
+</table> 
+
+<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='!noSearchResults' align='right'>
+		<div *ngIf='!isApproveBtnReq'>
+			<div *ngIf='isRecordApproved' style='color:red;' align='center'><strong>Application has been approved already!</strong></div>
+			<div class="col-md-6">
+				<div *ngIf='!isRecordApproved' align='right'>
+					<button type="submit" class="btn btn-primary" (click)= "Approve()" >Approve</button>
+				</div>
+			</div>
+		</div>
+		<div *ngIf='!isRejectBtnReq'>
+			<div *ngIf='isRecordRejected' style='color:red;' align='center'><strong>Application has been rejected !</strong></div>
+			<div class="col-md-6">
+				<div *ngIf='!isRecordRejected' align='left'>
+					<button type="submit" class="btn btn-primary" (click)= "Reject()">Reject</button>
+				</div>
+			</div>
+		</div>
+</div> 
+</div>
+
+</ng-template>
+<!--Success message for the approval-->
+<ng-template #approved >
+<div *ngIf='isRecordRejected' class="alert alert-danger"><strong>Rejected!</strong></div>
+<div *ngIf='isRecordApproved' class="alert alert-success"> <strong>Approved!</strong>
+All the below approved records have been committed to the HyperLedger. Their unique digital Ids are listed below :
+<ul *ngFor= "let recrds of approvedRecords">
+  <li>{{recrds.eid}}</li>
+</ul>
+</div>
+  <div class="alert alert-info">
+    Please click on <strong>OK</strong> to approve other applications !
+  </div>
+  <div align="center"><button type="submit" class="btn btn-primary" (click)="submitNew()">OK</button></div>
+</ng-template>
