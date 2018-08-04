@@ -1,4 +1,5 @@
 var express = require('express');
+var requestify = require('requestify');
 var router = express.Router();
 require('dotenv').load();
 var Cloudant = require('@cloudant/cloudant');
@@ -100,25 +101,15 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 		records[i]["_rev"] = result.docs[i]["_rev"];
         documentIdsAdded.push(result.docs[i].eid);
 		}
-		 var TradeReq = {
-                   
-  "$class": "org.kapy.paymentnetwork.Commodity",
-  "tradingSymbol": "176502",
-  "description": "testing",
-  "mainExchange": "ledger",
-  "quantity": 4,
-  "owner": "resource:org.kapy.paymentnetwork.Trader#3201"
-
-}
 
 var LandReq = {
                    
   "$class": "org.kapy.nursery.Land",
-  "eid": "12345678",
-  "LnRecId": "1111",
-  "NoSeedReq": 500,
-  "ReqStatus": "Approved",
-  "isFarmerRecApproved": true,
+  "eid": result.docs[i].eid,
+  "LnRecId": result.docs[i].LnRecId,
+  "NoSeedReq":result.docs[i].NoSeedReq,
+  "ReqStatus": result.docs[i].ReqStatus,
+  "isFarmerRecApproved": result.docs[i].isFarmerRecApproved,
   "nursery": "resource:org.kapy.nursery.Nursery#2222"
 
 }
@@ -127,14 +118,17 @@ var LandReq = {
 console.log("Owner request body :" +JSON.stringify(LandReq));
 //requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
 requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Land', {
+	    
 method: 'POST',
 body: LandReq ,
 dataType: 'json' 
 })
+
 .then(function(response) {
+	 console.log("Inside response block: " );
 // get the code
 var statusCode = response.getCode();  
-    console.log("Update land record Fabric Response code : " + code);
+    console.log("Update land record Fabric Response code : " + statusCode);
 console.log(response.getBody());
               
 });
