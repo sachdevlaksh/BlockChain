@@ -33,7 +33,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.post('/farmerRecordStatus', function(req,res){
+/* app.post('/farmerRecordStatus', function(req,res){
 	
 //Call to chaincode
  
@@ -120,7 +120,7 @@ app.post('/farmerRecordStatus', function(req,res){
                                                                                 });
                                                                                
  
-});
+}); */
                                 //end of chain code
 	
 
