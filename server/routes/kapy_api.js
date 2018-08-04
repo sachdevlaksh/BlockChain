@@ -110,11 +110,25 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
   "owner": "resource:org.kapy.paymentnetwork.Trader#3201"
 
 }
-console.log("Owner request body :" +JSON.stringify(TradeReq));
 
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
+var LandReq = {
+                   
+  "$class": "org.kapy.nursery.Land",
+  "eid": "12345678",
+  "LnRecId": "1111",
+  "NoSeedReq": 500,
+  "ReqStatus": "Approved",
+  "isFarmerRecApproved": true,
+  "nursery": "resource:org.kapy.nursery.Nursery#2222"
+
+}
+
+
+console.log("Owner request body :" +JSON.stringify(LandReq));
+//requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Land', {
 method: 'POST',
-body: TradeReq ,
+body: LandReq ,
 dataType: 'json' 
 })
 .then(function(response) {
