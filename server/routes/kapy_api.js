@@ -1,4 +1,10 @@
+
+
+
+
+
 var express = require('express');
+var requestify = require('requestify');
 var router = express.Router();
 require('dotenv').load();
 var Cloudant = require('@cloudant/cloudant');
@@ -94,50 +100,53 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 		console.log("Error finding documents");
 	  }
 	  console.log('Found documents with LnRecId '+ records[0].LnRecId +":"+ result.docs.length);
-	  for (var i = 0; i < result.docs.length; i++) {
-		console.log('Doc id:'+ result.docs[i].id);
-		records[i]["_id"] = result.docs[i]["_id"];
-		records[i]["_rev"] = result.docs[i]["_rev"];
-        documentIdsAdded.push(result.docs[i].eid);
+	  for (var i = 0; i < records.length; i++) {
+
+		for(var j=0; j < result.docs.length; j++){
+			records[i]["_id"] = result.docs[j]["_id"];
+			records[i]["_rev"] = result.docs[j]["_rev"];
+			documentIdsAdded.push(result.docs[j].eid);
+			documentIdsAdded.push(result.docs[j].ReqStatus);
+			documentIdsAdded.push(result.docs[j].isFarmerRecApproved);
+		
+			if(records[i].isFarmerRecApproved){ //sending only approved land record to composer
+				console.log("eid value is :" +result.docs[j].eid);
+				console.log("ReqStatus value is :" +result.docs[j].ReqStatus);
+				console.log("isFarmerRecApproved value is :" +result.docs[j].isFarmerRecApproved);
+				var LandReq = {
+								   
+				  "$class": "org.kapy.nursery.Land",
+				  "eid": result.docs[i].eid,
+				  "LnRecId": result.docs[i].LnRecId,
+				  "NoSeedReq":result.docs[i].NoSeedReq,
+				  "ReqStatus": result.docs[i].ReqStatus,
+				  "isFarmerRecApproved": result.docs[i].isFarmerRecApproved,
+				  "nursery": "resource:org.kapy.nursery.Nursery#2222"
+
+				}
+
+
+				console.log("LandReq request body :" +JSON.stringify(LandReq));
+				//requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
+				requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Land', {
+						
+				method: 'POST',
+				body: LandReq ,
+				dataType: 'json' 
+				})
+
+				.then(function(response) {
+					 console.log("Inside response block: " );
+				// get the code
+				var statusCode = response.getCode();  
+					console.log("Update land record Fabric Response code : " + statusCode);
+				console.log(response.getBody());
+							  
+				});
+			}
+				
 		}
-		 var TradeReq = {
-                   
-  "$class": "org.kapy.paymentnetwork.Commodity",
-  "tradingSymbol": "176502",
-  "description": "testing",
-  "mainExchange": "ledger",
-  "quantity": 4,
-  "owner": "resource:org.kapy.paymentnetwork.Trader#3201"
-
-}
-
-var LandReq = {
-                   
-  "$class": "org.kapy.nursery.Land",
-  "eid": "12345678",
-  "LnRecId": "1111",
-  "NoSeedReq": 500,
-  "ReqStatus": "Approved",
-  "isFarmerRecApproved": true,
-  "nursery": "resource:org.kapy.nursery.Nursery#2222"
-
-}
-
-
-console.log("Owner request body :" +JSON.stringify(LandReq));
-//requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Land', {
-method: 'POST',
-body: LandReq ,
-dataType: 'json' 
-})
-.then(function(response) {
-// get the code
-var statusCode = response.getCode();  
-    console.log("Update land record Fabric Response code : " + code);
-console.log(response.getBody());
-              
-});
+	}
 		  kapy.bulk({docs : records}, function(err, doc) {
 					if (err) {
 						console.log("Error updating records to Kapy" +err);

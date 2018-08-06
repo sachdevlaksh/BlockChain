@@ -1,3 +1,7 @@
+
+
+
+
 // Get dependencies
 const express = require('express');
 const app = express();
@@ -33,7 +37,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.post('/farmerRecordStatus', function(req,res){
+/* app.post('/farmerRecordStatus', function(req,res){
 	
 //Call to chaincode
  
@@ -120,14 +124,14 @@ app.post('/farmerRecordStatus', function(req,res){
                                                                                 });
                                                                                
  
-});
+}); */
                                 //end of chain code
 	
 
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '3001';
+const port = process.env.PORT || '3002';
 app.set('port', port);
 
 /**
