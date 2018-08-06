@@ -105,22 +105,26 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 		for(var j=0; j < result.docs.length; j++){
 			records[i]["_id"] = result.docs[j]["_id"];
 			records[i]["_rev"] = result.docs[j]["_rev"];
+			
 			documentIdsAdded.push(result.docs[j].eid);
 			documentIdsAdded.push(result.docs[j].ReqStatus);
 			documentIdsAdded.push(result.docs[j].isFarmerRecApproved);
-		
+			
+			console.log("isFarmerRecApproved values is  :" +records[0].isFarmerRecApproved);
+			console.log("ReqStatus values is  :" +records[0].ReqStatus);
+
 			if(records[i].isFarmerRecApproved){ //sending only approved land record to composer
-				console.log("eid value is :" +result.docs[j].eid);
-				console.log("ReqStatus value is :" +result.docs[j].ReqStatus);
-				console.log("isFarmerRecApproved value is :" +result.docs[j].isFarmerRecApproved);
+			//	console.log("eid value is :" +result.docs[j].eid);
+			//	console.log("ReqStatus value is :" +result.docs[j].ReqStatus);
+			//	console.log("isFarmerRecApproved value is :" +result.docs[j].isFarmerRecApproved);
 				var LandReq = {
 								   
 				  "$class": "org.kapy.nursery.Land",
 				  "eid": result.docs[i].eid,
 				  "LnRecId": result.docs[i].LnRecId,
 				  "NoSeedReq":result.docs[i].NoSeedReq,
-				  "ReqStatus": result.docs[i].ReqStatus,
-				  "isFarmerRecApproved": result.docs[i].isFarmerRecApproved,
+				  "ReqStatus": records[0].ReqStatus,
+				  "isFarmerRecApproved": records[0].isFarmerRecApproved,
 				  "nursery": "resource:org.kapy.nursery.Nursery#2222"
 
 				}
@@ -147,6 +151,7 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 				
 		}
 	}
+
 		  kapy.bulk({docs : records}, function(err, doc) {
 					if (err) {
 						console.log("Error updating records to Kapy" +err);
