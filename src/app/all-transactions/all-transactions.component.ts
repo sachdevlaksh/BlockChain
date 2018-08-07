@@ -64,9 +64,13 @@ export class AllTransactionsComponent implements OnInit {
         if(importClassArray[1] == 'hyperledger'){
           systemList.push(transaction);
         }
-       else {
-         performedList.push(transaction);
-        }
+       
+	if(importClassArray[4] == 'AddAsset'){
+	   performedList.push(transaction);
+	}
+      //  else {
+     //     performedList.push(transaction);
+      //  }
       });
 
       //update object
