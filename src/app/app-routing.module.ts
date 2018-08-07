@@ -4,6 +4,7 @@ import {LoginComponent} from "./login/login.component";
 import {TreasuryComponent} from "./treasury/treasury.component";
 import {ViewFarmerRecordComponent} from "./view-farmer-record/view-farmer-record.component";
 import { ForestOfficerInspectionComponent } from './forest-officer-inspection/forest-officer-inspection.component';
+import { AllTransactionsComponent } from './all-transactions/all-transactions.component';
 
 import {NgModule } from '@angular/core';
 import {Routes, RouterModule } from '@angular/router';
@@ -17,8 +18,10 @@ const routes: Routes = [
   { path: 'verifyAndReleaseFundByTreasury', component: TreasuryComponent,canActivate: [AuthGuard] },
   { path: 'viewFarmerRecord/:id', component: ViewFarmerRecordComponent },
   { path: 'verifyAndUpdateNoOfSeedSurvived',component:ForestOfficerInspectionComponent},
+  { path: 'AllTransactions', component: AllTransactionsComponent },
   { path: '', redirectTo: '/login',pathMatch:'full'},
   { path: '**', pathMatch:'full', redirectTo: '/login'}
+  
 ] 
 
 @NgModule({

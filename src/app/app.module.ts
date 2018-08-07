@@ -20,10 +20,12 @@ import { ManageFarmerRecordService } from './services/manage-farmer-record.servi
 import { LoginAuthenticationService } from './services/login-authentication.service';
 import { VerifyFarmerRecordService } from './services/verify-farmer-record.service';
 import { InspectorVerificationService } from './services/inspector-verification.service';
-import { ApiService } from './services/api.service';
+import {AllTransactionsService} from './services/all-transactions.service';
+//import { ApiService } from './services/api.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './guards/auth-guard';
+import { AllTransactionsComponent } from './all-transactions/all-transactions.component';
 
 
 
@@ -39,7 +41,8 @@ import { AuthGuard } from './guards/auth-guard';
     FarmerApplicationComponent,
     GmapsComponent,
     ViewFarmerRecordComponent,
-    ForestOfficerInspectionComponent
+    ForestOfficerInspectionComponent,
+    AllTransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,7 @@ import { AuthGuard } from './guards/auth-guard';
     AppRoutingModule
 
   ],
-  providers: [AuthGuard,ManageFarmerRecordService,NurserySurveyDataService,LoginAuthenticationService,VerifyFarmerRecordService,ApiService,InspectorVerificationService],
+  providers: [AuthGuard,ManageFarmerRecordService,NurserySurveyDataService,LoginAuthenticationService,VerifyFarmerRecordService,InspectorVerificationService,AllTransactionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
