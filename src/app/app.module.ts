@@ -24,6 +24,7 @@ import { ApiService } from './services/api.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './guards/auth-guard';
+import { AllTransactionsComponent } from './all-transactions/all-transactions.component';
 
 
 
@@ -39,7 +40,8 @@ import { AuthGuard } from './guards/auth-guard';
     FarmerApplicationComponent,
     GmapsComponent,
     ViewFarmerRecordComponent,
-    ForestOfficerInspectionComponent
+    ForestOfficerInspectionComponent,
+    AllTransactionsComponent
   ],
   imports: [
     BrowserModule,
