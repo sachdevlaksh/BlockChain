@@ -1,0 +1,152 @@
+<div  align="center">
+  <h3>KAPY - Application for seed samplings</h3>
+</div>
+<div *ngIf ="!isSubmitSuccessful;then FillApplicationForm else applicationSuccessful"></div>
+
+<ng-template #FillApplicationForm>
+<div class="FillApplicationForm">
+  <!--<form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="onSubmit()">-->
+  <form [formGroup]="farmerReqForm" (ngSubmit)="onSubmit()">
+	 <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Farmer Details</h1>
+      </div>
+      <div class="panel-body">
+		   <div class="form-group">
+            <div class="col-xs-5 form-group" [ngClass]="displayFieldCss('GvtId')">
+              <label for="GvtId" class="control-label required">Govt Id :</label>
+              <input type="text" class="form-control" id="GvtId" formControlName="GvtId" required/>
+              <app-display-validation-err [displayError]="isFieldValid('GvtId')" errorMsg="Govt Id is mandatory"></app-display-validation-err>
+            </div>
+
+            <div class="col-xs-5 form-group" [ngClass]="displayFieldCss('LnRecId')">
+              <label for="LnRecId" class="control-label required">LandRecord Id :</label>
+              <input type="text" id="LnRecId" class="form-control" formControlName="LnRecId" required />
+              <app-display-validation-err [displayError]="isFieldValid('LnRecId')" errorMsg="LandRecord Id is mandatory"></app-display-validation-err>
+            </div>
+		 </div>
+		 
+		 <div class="form-group">
+             <div class="col-md-5 form-group" [ngClass]="displayFieldCss('OwnerNm')">
+              <label for="OwnerNm" class="control-label required">Owner Name :</label>
+              <input type="text" id="OwnerNm" class="form-control" formControlName="OwnerNm" required />
+              <app-display-validation-err [displayError]="isFieldValid('OwnerNm')" errorMsg="OwnerName is mandatory"></app-display-validation-err>
+            </div>
+			<div class="col-md-5 form-group" [ngClass]="displayFieldCss('DOB')">
+              <label for="DOB" class="control-label required">Date Of Birth :</label>
+              <input type="text" id="DOB" class="form-control" formControlName="DOB"  required/>
+              <app-display-validation-err [displayError]="isFieldValid('DOB')" errorMsg="DOB is mandatory"></app-display-validation-err>
+            </div>
+		</div>
+		
+		 <div class="form-group">
+             <div class="col-md-5 form-group" [ngClass]="displayFieldCss('AreaOfLand')">
+              <label for="AreaOfLand" class="control-label required">Area Of Land :</label>
+              <input type="text" id="AreaOfLand" class="form-control" formControlName="AreaOfLand" required />
+              <app-display-validation-err [displayError]="isFieldValid('AreaOfLand')" errorMsg="Area of Land is mandatory"></app-display-validation-err>
+            </div>
+			<div class="col-md-5 form-group" [ngClass]="displayFieldCss('NoSeedReq')">
+              <label for="NoSeedReq" class="control-label required">No of Seeds Required :</label>
+              <input type="text" id="NoSeedReq" class="form-control" formControlName="NoSeedReq" required />
+              <app-display-validation-err [displayError]="isFieldValid('NoSeedReq')" errorMsg="No of Seeds Required is mandatory"></app-display-validation-err>
+            </div>
+		</div>
+		
+		 <div class="form-group">
+			<div class="col-md-4" [ngClass]="displayFieldCss('LndAddr')">
+				<label for="LndAddr" class="control-label required">Land Address :</label>
+				<input type="text" id="LndAddr" class="form-control" formControlName="LndAddr"  required/>
+				<app-display-validation-err [displayError]="isFieldValid('LndAddr')" errorMsg="Land Address is mandatory"></app-display-validation-err>
+			</div>
+		</div>	
+    </div>
+   </div>
+	<div class="panel panel-default">
+			  <div class="panel-heading">
+				<h1 class="panel-title">Upload Land Ownership Certificate</h1>
+			  </div>
+			  <div class="panel-body">
+				<div class="form-group">
+				  <div class="col-md-4" [ngClass]="displayFieldCss('preMutationSketch')">
+					<label for="sketch" class="control-label required">Property Sketch</label>
+					<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept="image/*" id="sketch" formControlName="preMutationSketch">
+					<app-display-validation-err [displayError]="isFieldValid('preMutationSketch')" errorMsg="Premutation sketch is mandatory"></app-display-validation-err>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+	<div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Bank Details</h1>
+      </div>
+      <div class="panel-body">
+	  <div formGroupName="bankDetails">
+		   
+		   <div class="form-group">
+            <div class="col-xs-5 form-group" [ngClass]="displayFieldCss('bankDetails.AcNo')">
+              <label for="AcNo" class="control-label required">Account Number :</label>
+              <input type="text" class="form-control" id="AcNo" formControlName="AcNo" required />
+              <app-display-validation-err [displayError]="isFieldValid('bankDetails.AcNo')" errorMsg="Account Number is mandatory"></app-display-validation-err>
+            </div>
+
+            <div class="col-xs-5 form-group" [ngClass]="displayFieldCss('bankDetails.IfscCd')">
+              <label for="IfscCd" class="control-label required">IFSC Code :</label>
+              <input type="text" id="IfscCd" class="form-control" formControlName="IfscCd" required />
+              <app-display-validation-err [displayError]="isFieldValid('bankDetails.IfscCd')" errorMsg="IFSC Code is mandatory"></app-display-validation-err>
+            </div>
+		 </div>
+		 
+		   <div class="form-group">
+            <div class="col-xs-5 form-group" [ngClass]="displayFieldCss('bankDetails.PanNo')">
+              <label for="PanNo" class="control-label required">PAN Number :</label>
+              <input type="text" class="form-control" id="PanNo" formControlName="PanNo" required />
+              <app-display-validation-err [displayError]="isFieldValid('bankDetails.PanNo')" errorMsg="Account Number is mandatory"></app-display-validation-err>
+            </div>
+
+            <div class="col-xs-5 form-group" [ngClass]="displayFieldCss('bankDetails.AdhrNo')">
+              <label for="AdhrNo" class="control-label required">Aadhar No :</label>
+              <input type="text" id="AdhrNo" class="form-control" formControlName="AdhrNo" required/>
+              <app-display-validation-err [displayError]="isFieldValid('bankDetails.AdhrNo')" errorMsg="Aadhar No is mandatory"></app-display-validation-err>
+            </div>
+		 </div>
+		 
+		 
+		 <div class="form-group">
+             <div class="col-md-5 form-group" [ngClass]="displayFieldCss('bankDetails.MblNo')">
+              <label for="MblNo" class="control-label required">Mobile No :</label>
+              <input type="text" id="MblNo" class="form-control" formControlName="MblNo" required/>
+              <app-display-validation-err [displayError]="isFieldValid('bankDetails.MblNo')" errorMsg="Mobile Number is mandatory"></app-display-validation-err>
+            </div>
+			<div class="col-md-5 form-group" [ngClass]="displayFieldCss('bankDetails.EmlId')">
+              <label for="EmlId" class="control-label required">Email Id :</label>
+              <input type="text" id="EmlId" class="form-control" formControlName="EmlId" required />
+              <app-display-validation-err [displayError]="isFieldValid('bankDetails.EmlId')" errorMsg="Email Id is mandatory"></app-display-validation-err>
+            </div>
+		</div>
+		
+		 <div class="form-group">
+			<div class="col-md-12" [ngClass]="displayFieldCss('bankDetails.Addr')">
+				<label for="Addr" class="control-label required">Address :</label>
+				<input type="text" id="Addr" class="form-control" formControlName="Addr" required />
+				<app-display-validation-err [displayError]="isFieldValid('bankDetails.Addr')" errorMsg="Address is mandatory"></app-display-validation-err>
+			</div>
+		</div>	
+    </div>
+   </div>
+  </div>
+	
+    <div align="middle">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+</ng-template>
+
+<ng-template #applicationSuccessful>
+  <div class="alert alert-success"> <strong>Success!</strong>Application has been submitted successfully ! The enrollment ID for this record is <strong>{{farmerRecord.eid}}</strong></div>
+  <div class="alert alert-info">
+    Please click on <strong>Submit New</strong> to submit another application !
+  </div>
+  <div align="center"><button type="submit" class="btn btn-primary" (click)="submitNew()">Submit New</button></div>
+</ng-template>
