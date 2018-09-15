@@ -258,7 +258,7 @@ console.log(response.getBody());
 		var MonitoringReq = {   
 		  "$class": "org.kapy.payments.Monitoring",
 		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
-		  "gok": "resource:org.kapy.payments.GoK#I"+result.docs[i].eid
+		  "gok": "resource:org.kapy.payments.GoK#"+"I"+result.docs[i].eid
 		}
 		console.log("MonitoringReq request body :" +JSON.stringify(MonitoringReq));
 
