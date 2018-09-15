@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -44,11 +45,11 @@ export class ManageFarmerRecordService {
     }
 
 	// API: POST /farmerRecords/updateKapyApprovedStatus[]
-	public updateNumberOdSeedServiced(farmerRecord: FarmerRecord[]){
-      console.log("Inside updateNumberOdSeedServiced method in manageFarmerRecord service");
+	public updateNumberOfSeedServiced(farmerRecord: FarmerRecord[]){
+      console.log("Inside updateNumberOfSeedServiced method in manageFarmerRecord service");
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      return this.http.post('/manageFarmerRecords/api/updateNumberOdSeedServiced', JSON.stringify(farmerRecord), { headers: headers })
+      return this.http.post('/manageFarmerRecords/api/updateNumberOfSeedServiced', JSON.stringify(farmerRecord), { headers: headers })
         .map(res => res.json());     
     }
 	
