@@ -235,7 +235,7 @@ router.post('/api/updateNumberOfSeedServiced', (req, res) => {
 		    "$class": "org.kapy.payments.GoK",
 			"GoKRecordsId": "I"+result.docs[i].eid,
 			"inspectionCompletedForYear": records[0].inspectionCompletedForYear,
-			"NoSeedSurvForYear": result.docs[i].NoSeedSurved,
+			"NoSeedSurvForYear": records[0].NoSeedSurved,
 			"landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
 			"ownerEntity": "InspectionOfficer"
 		}
