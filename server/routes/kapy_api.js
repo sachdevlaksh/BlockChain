@@ -137,7 +137,7 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 		records[i]["_id"] = result.docs[i]["_id"];
 		records[i]["_rev"] = result.docs[i]["_rev"];
         documentIdsAdded.push(result.docs[i].eid);
-		}
+		
 		 var NurseryReq = {               
   "$class": "org.kapy.payment.Verification",
   "landrecord": "resource:org.kapy.payment.LandRecord#"+result.docs[i].eid,
@@ -157,6 +157,7 @@ var statusCode = response.getCode();
 console.log(response.getBody());
               
 });
+
 	if(statusCode=200){
 		  kapy.bulk({docs : records}, function(err, doc) {
 					if (err) {
@@ -173,6 +174,7 @@ console.log(response.getBody());
 		res.json({success : false, message : "Failed to update in HyperLedger by nursery"});
 	}
 	
+}
 });
 }); 
 
