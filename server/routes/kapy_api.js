@@ -72,6 +72,38 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
   console.log("Received EID: " + req.body.eid);
   var record = req.body;
   var id = req.body.eid;
+  
+  var FarmerReq = {
+ 
+  "$class": "org.kapy.payments.LandRecord",
+  "eid": req.body.eid,
+  "LnRecId": req.body.LnRecId,
+  "NoSeedReq": req.body.NoSeedReq,
+  "SubmittedDate": req.body.SubmittedDt,
+  "BankDetails": req.body.Bank.AcNo,
+  "isFarmerRecApproved": false,
+  "inspectionCompletedForYear": 0,
+  "NoSeedSurvForYear": 0,
+  "AmountProcessed": 0,
+  "SeedlingPrice":0,
+  "ownerEntity": "FarmerAgent"
+}
+
+console.log("Farmer request body :" +JSON.stringify(FarmerReq));
+
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/LandRecord', {
+method: 'POST',
+body: FarmerReq ,
+dataType: 'json' 
+})
+.then(function(response) {
+// get the code
+var statusCode = response.getCode();  
+    console.log("statusCode from hyperledger composer is : " + statusCode);
+console.log(response.getBody());
+              
+});
+	if(statusCode==200){
     kapy.insert(record, id, function(err, doc) {
 					if (err) {
 						console.log("Error saving record to Kapy" +err);
@@ -82,6 +114,10 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
 						}
 										
     });	
+	}
+	else{
+		res.json({success : false, message : "Failed to update in HyperLedger"});
+	}
 });
 
 /* POST API to update approved records in Kapy*/
