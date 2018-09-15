@@ -72,7 +72,7 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
   console.log("Received EID: " + req.body.eid);
   var record = req.body;
   var id = req.body.eid;
-  var statusCode;
+  var statusCode=0;
   console.log("req.body.bank.AcNo: " + req.body.bankDetails.AcNo);
   var FarmerReq = {
  
@@ -101,10 +101,10 @@ dataType: 'json'
 // get the code
 statusCode = response.getCode();  
     console.log("statusCode from hyperledger composer is : " + statusCode);
-console.log(response.getBody());
-              
+console.log(response.getBody());           
 });
-	if(statusCode==200){
+	if(statusCode=200){
+	console.log("indide if with status code 200");
     kapy.insert(record, id, function(err, doc) {
 					if (err) {
 						console.log("Error saving record to Kapy" +err);
