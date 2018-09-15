@@ -128,8 +128,8 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
   console.log("list of documents" + JSON.stringify(records));
   var documentIdsAdded = [];
   var statusCodeNur=0;
-  var statusCodeVer=0;
-  Var Status = "Approved";
+  var statusCodeVer=0; 
+  var Status = "Approved";
   kapy.find({selector:{LnRecId:records[0].LnRecId}}, function(er, result) {
 	  if (er) {
 		console.log("Error finding documents");
