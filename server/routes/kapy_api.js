@@ -127,7 +127,9 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
   var records = req.body; //Array of farmer records
   console.log("list of documents" + JSON.stringify(records));
   var documentIdsAdded = [];
-  var statusCode=0;
+  var statusCodeNur=0;
+  var statusCodeVer=0;
+  Var Status = "Approved";
   kapy.find({selector:{LnRecId:records[0].LnRecId}}, function(er, result) {
 	  if (er) {
 		console.log("Error finding documents");
@@ -137,43 +139,73 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 		records[i]["_id"] = result.docs[i]["_id"];
 		records[i]["_rev"] = result.docs[i]["_rev"];
         documentIdsAdded.push(result.docs[i].eid);
+		if(result.docs[i].isFarmerRecApproved = true){
+			Status= "Approved";
+		}else{
+			Status= "Rejected";
+		}
+		var NurseryReq= {
+		  "$class": "org.kapy.payments.Nursery",
+		  "nurseryRecordsId": "N"+result.docs[i].eid,
+		  "status": Status,
+		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
+		  "ownerEntity": "NurseryAdmin"
+		}
 		
-		 var NurseryReq = {               
-  "$class": "org.kapy.payments.Verification",
-  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
-  "nursery": "resource:org.kapy.payments.Nursery#"+"F"+result.docs[i].eid
-}
-console.log("Owner request body :" +JSON.stringify(NurseryReq));
+		console.log("NurseryReq request body :" +JSON.stringify(NurseryReq));
 
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Verification', {
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Nursery', {
 method: 'POST',
 body: NurseryReq ,
 dataType: 'json' 
 })
 .then(function(response) {
 // get the code
-var statusCode = response.getCode();  
-    console.log("Update land record Fabric Response code : " + statusCode);
+statusCodeNur = response.getCode();  
+    console.log("Update land record Fabric Response code : " + statusCodeNur);
 console.log(response.getBody());
               
 });
-
-	if(statusCode=200){
-		  kapy.bulk({docs : records}, function(err, doc) {
-					if (err) {
-						console.log("Error updating records to Kapy" +err);
-						res.json({success : false, message : err+""});
-					} else{
-						console.log("success saving records to Kapy");
-				       res.json({success : true, documentIdsAdded : documentIdsAdded});
-					}				
-				});	
-
 	
+	if(statusCodeNur=200){
+		var VerificationReq = {               
+		  "$class": "org.kapy.payments.Verification",
+		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
+		  "nursery": "resource:org.kapy.payments.Nursery#"+"F"+result.docs[i].eid
+		}
+		console.log("VerificationReq request body :" +JSON.stringify(VerificationReq));
+
+		requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Verification', {
+		method: 'POST',
+		body: VerificationReq ,
+		dataType: 'json' 
+		})
+		.then(function(response) {
+		// get the code
+		statusCodeVer = response.getCode();  
+			console.log("Update land record Fabric Response code : " + statusCodeVer);
+		console.log(response.getBody());
+					  
+		});
+
+		if(statusCodeVer=200){
+			  kapy.bulk({docs : records}, function(err, doc) {
+						if (err) {
+							console.log("Error updating records to Kapy" +err);
+							res.json({success : false, message : err+""});
+						} else{
+							console.log("success saving records to Kapy");
+						   res.json({success : true, documentIdsAdded : documentIdsAdded});
+						}				
+					});	
+
+		
+		}else{
+			res.json({success : false, message : "Failed to update Verification transaction in HyperLedger"});
+		}
 	}else{
-		res.json({success : false, message : "Failed to update in HyperLedger by nursery"});
+		res.json({success : false, message : "Failed to update Nursery Asset in HyperLedger "});
 	}
-	
 }
 });
 }); 
