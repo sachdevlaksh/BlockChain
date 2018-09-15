@@ -210,6 +210,93 @@ console.log(response.getBody());
 });
 }); 
 
+
+
+/* POST API to update No of Seeds survived in Kapy*/
+router.post('/api/updateNumberOdSeedServiced', (req, res) => {
+  console.log('Inside Express api to update new land record');
+  var records = req.body; //Array of farmer records
+  console.log("list of documents" + JSON.stringify(records));
+  var documentIdsAdded = [];
+  var statusCodeGOK=0;
+  var statusCodeMonitoring=0; 
+  kapy.find({selector:{LnRecId:records[0].LnRecId}}, function(er, result) {
+	  if (er) {
+		console.log("Error finding documents");
+	  }
+	  console.log('Found documents with LnRecId '+ records[0].LnRecId +":"+ result.docs.length);
+	  for (var i = 0; i < result.docs.length; i++) {
+		//records[i]["_id"] = result.docs[i]["_id"];
+		//records[i]["_rev"] = result.docs[i]["_rev"];
+        documentIdsAdded.push(result.docs[i].eid);
+		
+		var GoKReq= {
+		    "$class": "org.kapy.payments.GoK",
+			"GoKRecordsId": "I"+result.docs[i].eid,
+			"inspectionCompletedForYear": result.docs[i].inspectionCompletedForYear,
+			"NoSeedSurvForYear": result.docs[i].NoSeedSurved,
+			"landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
+			"ownerEntity": "InspectionOfficer"
+		}
+		
+		console.log("GoKReq request body :" +JSON.stringify(GoKReq));
+
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/GoK', {
+method: 'POST',
+body: GoKReq ,
+dataType: 'json' 
+})
+.then(function(response) {
+// get the code
+statusCodeGOK = response.getCode();  
+    console.log("Update land record Fabric Response code : " + statusCodeGOK);
+console.log(response.getBody());
+              
+});
+	
+	if(statusCodeGOK=200){
+		var MonitoringReq = {   
+		  "$class": "org.kapy.payments.Monitoring",
+		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
+		  "gok": "resource:org.kapy.payments.GoK#I"+result.docs[i].eid
+		}
+		console.log("MonitoringReq request body :" +JSON.stringify(MonitoringReq));
+
+		requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Monitoring', {
+		method: 'POST',
+		body: MonitoringReq ,
+		dataType: 'json' 
+		})
+		.then(function(response) {
+		// get the code
+		statusCodeMonitoring = response.getCode();  
+			console.log("Update land record Fabric Response code : " + statusCodeMonitoring);
+		console.log(response.getBody());
+					  
+		});
+
+		if(statusCodeMonitoring=200){
+			  kapy.bulk({docs : records}, function(err, doc) {
+						if (err) {
+							console.log("Error updating records to Kapy" +err);
+							res.json({success : false, message : err+""});
+						} else{
+							console.log("success saving records to Kapy");
+						   res.json({success : true, documentIdsAdded : documentIdsAdded});
+						}				
+					});	
+
+		
+		}else{
+			res.json({success : false, message : "Failed to update Monitoring transaction in HyperLedger"});
+		}
+	}else{
+		res.json({success : false, message : "Failed to update Gok Asset in HyperLedger "});
+	}
+}
+});
+}); 
+
 /* GET API to get farmer records from KAPY using EID*/
 router.get('/api/getFarmerRecordsByEid/:id', (req, res) => {
   console.log('Inside Express api to get farmer records by eid');
