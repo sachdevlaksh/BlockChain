@@ -139,9 +139,9 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
         documentIdsAdded.push(result.docs[i].eid);
 		
 		 var NurseryReq = {               
-  "$class": "org.kapy.payment.Verification",
-  "landrecord": "resource:org.kapy.payment.LandRecord#"+result.docs[i].eid,
-  "nursery": "resource:org.kapy.payment.Nursery#"+"F"+result.docs[i].eid
+  "$class": "org.kapy.payments.Verification",
+  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
+  "nursery": "resource:org.kapy.payments.Nursery#"+"F"+result.docs[i].eid
 }
 console.log("Owner request body :" +JSON.stringify(NurseryReq));
 
