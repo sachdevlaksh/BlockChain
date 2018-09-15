@@ -229,11 +229,12 @@ router.post('/api/updateNumberOfSeedServiced', (req, res) => {
 		//records[i]["_id"] = result.docs[i]["_id"];
 		//records[i]["_rev"] = result.docs[i]["_rev"];
         documentIdsAdded.push(result.docs[i].eid);
-		
+		//console.log("rresult.docs :" +result[0]);
+		console.log("inspectionCompletedForYear :" +records[0].inspectionCompletedForYear);
 		var GoKReq= {
 		    "$class": "org.kapy.payments.GoK",
 			"GoKRecordsId": "I"+result.docs[i].eid,
-			"inspectionCompletedForYear": result.docs[i].inspectionCompletedForYear,
+			"inspectionCompletedForYear": records[0].inspectionCompletedForYear,
 			"NoSeedSurvForYear": result.docs[i].NoSeedSurved,
 			"landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
 			"ownerEntity": "InspectionOfficer"
