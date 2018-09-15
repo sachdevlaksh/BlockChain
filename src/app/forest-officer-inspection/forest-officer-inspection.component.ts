@@ -222,11 +222,21 @@ export class ForestOfficerInspectionComponent implements OnInit {
  
  Update(){
 	console.log("inside update function");	
-	this.farmerRecord = <FarmerRecord>this.farmerReqForm.value;
-	this.farmerRecords[0].NoSeedSurved=this.farmerRecord.NoSeedSurved;
-	this.farmerRecords[0].ReqStatus="UpdatedByInsp";
-	console.log("No of seeds survided is:" +  this.farmerRecord.NoSeedSurved );
-	console.log("LnRecId:" +  this.farmerRecords[0].LnRecId );		
+	
+	 this.farmerRecord = <FarmerRecord>this.farmerReqForm.value;
+	//console.log("length is:" +  this.farmerReqForm.value);
+	 for (let farmerRecord of this.farmerRecords) {   
+		console.log("length are:" +  this.farmerRecords.length );
+		console.log("this.farmerRecords is:" +  farmerRecord.NoSeedSurved);
+		//console.log("No of seeds survided is:" +  this.farmerRecords[0].NoSeedSurved );
+		console.log("LnRecId:" +  farmerRecord.LnRecId );
+        
+    }
+	//this.farmerRecords= this.farmerReqForm.value;
+	//this.farmerRecords[0].NoSeedSurved=this.farmerRecords[0].NoSeedSurved;
+	//this.farmerRecords[1].NoSeedSurved=this.farmerRecords[0].NoSeedSurved;
+	//this.farmerRecords[0].ReqStatus="UpdatedByInsp";
+			
 	this.updatedRecords =  this.farmerRecords.filter(
 	(rec) => rec.ReqStatus=="UpdatedByInsp");
 	console.log("Approved records are" + this.updatedRecords.length);
