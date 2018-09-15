@@ -61,10 +61,19 @@ export class AllTransactionsComponent implements OnInit {
         var importClassArray = importClass.split(".");
 
         //if `hyperledger` string in the transactionType, then add to systemList, otherwise performedList
-        if(importClassArray[1] == 'hyperledger'){
-          systemList.push(transaction);
-        }
+       // if(importClassArray[1] == 'hyperledger'){
+      //    systemList.push(transaction);
+      //  }
 		if(importClassArray[4] == 'AddAsset'){
+			performedList.push(transaction);
+		}
+		if(importClassArray[4] == 'Verification'){
+			performedList.push(transaction);
+		}
+		if(importClassArray[4] == 'Monitoring'){
+			performedList.push(transaction);
+		}
+		if(importClassArray[4] == 'Disbursement'){
 			performedList.push(transaction);
 		}
       //  else {
