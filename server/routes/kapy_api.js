@@ -213,7 +213,7 @@ console.log(response.getBody());
 
 
 /* POST API to update No of Seeds survived in Kapy*/
-router.post('/api/updateNumberOdSeedServiced', (req, res) => {
+router.post('/api/updateNumberOfSeedServiced', (req, res) => {
   console.log('Inside Express api to update new land record');
   var records = req.body; //Array of farmer records
   console.log("list of documents" + JSON.stringify(records));
