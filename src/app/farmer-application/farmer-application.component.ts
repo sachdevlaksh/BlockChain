@@ -19,6 +19,8 @@ export class FarmerApplicationComponent implements OnInit {
   farmerReqForm: FormGroup;
   farmerRecord: FarmerRecord = new FarmerRecord(); //initialize Farmer record object
   isSubmitSuccessful: boolean = false;
+  Success:boolean=false;
+  Failed:boolean=false;
  constructor(private formBuilder: FormBuilder, private manageFarmerRecordService: ManageFarmerRecordService) { }
   ngOnInit() {
     this.createForm();
@@ -80,7 +82,11 @@ export class FarmerApplicationComponent implements OnInit {
           if (response !=null && response.success) {
             //  form submission is successful
             this.isSubmitSuccessful = true;
-          }
+			this.Success=true;
+          }else{
+		   this.isSubmitSuccessful = true;
+		   this.Failed=true;
+		  }
         });
     } else {
       this.validateAllFormFields(this.farmerReqForm);

@@ -144,7 +144,8 @@
 </ng-template>
 
 <ng-template #applicationSuccessful>
-  <div class="alert alert-success"> <strong>Success!</strong>Application has been submitted successfully ! The enrollment ID for this record is <strong>{{farmerRecord.eid}}</strong></div>
+  <div *ngIf='Success' class="alert alert-success"> <strong>Success!</strong>Application has been submitted successfully ! The enrollment ID for this record is <strong>{{farmerRecord.eid}}</strong></div>
+  <div *ngIf='Failed' class="alert alert-danger"> <strong>Failed!</strong>Failed to update in HyperLedger<strong>{{farmerRecord.eid}}</strong></div>
   <div class="alert alert-info">
     Please click on <strong>Submit New</strong> to submit another application !
   </div>
