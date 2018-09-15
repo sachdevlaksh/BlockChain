@@ -127,6 +127,7 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
   var records = req.body; //Array of farmer records
   console.log("list of documents" + JSON.stringify(records));
   var documentIdsAdded = [];
+  var statusCode=0;
   kapy.find({selector:{LnRecId:records[0].LnRecId}}, function(er, result) {
 	  if (er) {
 		console.log("Error finding documents");
@@ -137,30 +138,26 @@ router.post('/api/updateKapyApprovedStatus', (req, res) => {
 		records[i]["_rev"] = result.docs[i]["_rev"];
         documentIdsAdded.push(result.docs[i].eid);
 		}
-		 var TradeReq = {
-                   
-  "$class": "org.kapy.paymentnetwork.Commodity",
-  "tradingSymbol": "176502",
-  "description": "testing",
-  "mainExchange": "ledger",
-  "quantity": 4,
-  "owner": "resource:org.kapy.paymentnetwork.Trader#3201"
-
+		 var NurseryReq = {               
+  "$class": "org.kapy.payment.Verification",
+  "landrecord": "resource:org.kapy.payment.LandRecord#"+result.docs[i].eid,
+  "nursery": "resource:org.kapy.payment.Nursery#"+"F"+result.docs[i].eid
 }
-console.log("Owner request body :" +JSON.stringify(TradeReq));
+console.log("Owner request body :" +JSON.stringify(NurseryReq));
 
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Verification', {
 method: 'POST',
-body: TradeReq ,
+body: NurseryReq ,
 dataType: 'json' 
 })
 .then(function(response) {
 // get the code
 var statusCode = response.getCode();  
-    console.log("Update land record Fabric Response code : " + code);
+    console.log("Update land record Fabric Response code : " + statusCode);
 console.log(response.getBody());
               
 });
+	if(statusCode=200){
 		  kapy.bulk({docs : records}, function(err, doc) {
 					if (err) {
 						console.log("Error updating records to Kapy" +err);
@@ -171,9 +168,13 @@ console.log(response.getBody());
 					}				
 				});	
 
-	}); 
+	
+	}else{
+		res.json({success : false, message : "Failed to update in HyperLedger by nursery"});
+	}
+	
 });
-
+}); 
 
 /* GET API to get farmer records from KAPY using EID*/
 router.get('/api/getFarmerRecordsByEid/:id', (req, res) => {
