@@ -72,7 +72,8 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
   console.log("Received EID: " + req.body.eid);
   var record = req.body;
   var id = req.body.eid;
-  
+  var statusCode;
+  console.log("req.body.bank.AcNo: " + req.body.bankDetails.AcNo);
   var FarmerReq = {
  
   "$class": "org.kapy.payments.LandRecord",
@@ -80,7 +81,7 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
   "LnRecId": req.body.LnRecId,
   "NoSeedReq": req.body.NoSeedReq,
   "SubmittedDate": req.body.SubmittedDt,
-  "BankDetails": req.body.Bank.AcNo,
+  "BankDetails": req.body.bankDetails.AcNo,
   "isFarmerRecApproved": false,
   "inspectionCompletedForYear": 0,
   "NoSeedSurvForYear": 0,
@@ -91,14 +92,14 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
 
 console.log("Farmer request body :" +JSON.stringify(FarmerReq));
 
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/LandRecord', {
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Commodity', {
 method: 'POST',
 body: FarmerReq ,
 dataType: 'json' 
 })
 .then(function(response) {
 // get the code
-var statusCode = response.getCode();  
+statusCode = response.getCode();  
     console.log("statusCode from hyperledger composer is : " + statusCode);
 console.log(response.getBody());
               
