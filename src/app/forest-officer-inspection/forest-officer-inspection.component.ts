@@ -227,12 +227,12 @@ export class ForestOfficerInspectionComponent implements OnInit {
 	console.log("this.farmerRecord values are:" + JSON.stringify(this.farmerReqForm.value));
 	// for (let farmerRecord of this.farmerRecords) {   
 	//	console.log("length are:" +  this.farmerRecords.length );
-	//	console.log("No of seeds survided is:" +  farmerRecord.NoSeedSurved );
+		console.log("No of seeds survided is:" +  this.farmerRecord.NoSeedSurved );
 	//	console.log("LnRecId:" +  farmerRecord.LnRecId );
     //}
 	this.farmerRecords[0].ReqStatus="UpdatedByInsp"	;
 	this.farmerRecords[0].inspectionCompletedForYear=1;
-	this.farmerRecords[0].inspectionCompletedForYear=farmerRecord.NoSeedSurved;
+	this.farmerRecords[0].NoSeedSurved=this.farmerRecord.NoSeedSurved;
 	this.updatedRecords =  this.farmerRecords.filter(
 	(rec) => rec.ReqStatus=="UpdatedByInsp");
 	console.log("Approved records are" + this.updatedRecords.length);
