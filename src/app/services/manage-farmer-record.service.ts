@@ -34,7 +34,7 @@ export class ManageFarmerRecordService {
   }
 
 
-    // API: POST /farmerRecords/farmerRecord[]
+    // API: POST /farmerRecords/updateKapyApprovedStatus[]
   public updateFarmerApprovedOrRejectedRecords(farmerRecord: FarmerRecord[]){
       console.log("Inside updateFarmerApprovedOrRejectedRecords method in manageFarmerRecord service");
       let headers = new Headers();
@@ -43,6 +43,15 @@ export class ManageFarmerRecordService {
         .map(res => res.json());     
     }
 
+	// API: POST /farmerRecords/updateKapyApprovedStatus[]
+	public updateNumberOdSeedServiced(farmerRecord: FarmerRecord[]){
+      console.log("Inside updateNumberOdSeedServiced method in manageFarmerRecord service");
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      return this.http.post('/manageFarmerRecords/api/updateNumberOdSeedServiced', JSON.stringify(farmerRecord), { headers: headers })
+        .map(res => res.json());     
+    }
+	
 	 // API: GET /FarmerRecords/:ReqStatus
   public getFarmerRecordsByReqStatus(ReqStatus: string) : Observable<any> {
       console.log("Inside getFarmerRecordsByReqStatus method in manageFarmerRecord service");
