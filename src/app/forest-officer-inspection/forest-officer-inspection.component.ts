@@ -235,7 +235,7 @@ export class ForestOfficerInspectionComponent implements OnInit {
 	this.updatedRecords =  this.farmerRecords.filter(
 	(rec) => rec.ReqStatus=="UpdatedByInsp");
 	console.log("Approved records are" + this.updatedRecords.length);
-	this.manageFarmerRecordsService.updateNumberOdSeedServiced(this.updatedRecords)
+	this.manageFarmerRecordsService.updateNumberOfSeedServiced(this.updatedRecords)
 	.subscribe(
         response => {
           console.log("res received addFarmerRecord service" + JSON.stringify(response));
