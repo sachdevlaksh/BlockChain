@@ -171,7 +171,7 @@ console.log(response.getBody());
 		var VerificationReq = {               
 		  "$class": "org.kapy.payments.Verification",
 		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
-		  "nursery": "resource:org.kapy.payments.Nursery#"+"F"+result.docs[i].eid
+		  "nursery": "resource:org.kapy.payments.Nursery#"+"N"+result.docs[i].eid
 		}
 		console.log("VerificationReq request body :" +JSON.stringify(VerificationReq));
 
