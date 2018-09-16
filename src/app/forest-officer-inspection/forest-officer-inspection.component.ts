@@ -141,10 +141,7 @@ export class ForestOfficerInspectionComponent implements OnInit {
 						console.log("noOfDays"+noOfDays) // 31
 						j= j++;
 					}
-					//console.log(a.diff(b, 'minutes')) // 44700
-					//console.log(a.diff(b, 'hours')) // 745
-					//console.log("No of Days"+(a.diff(b, 'days'))) // 31
-					//console.log(a.diff(b, 'weeks')) // 4
+					
 				}
 	  
 			 console.log("farmer records " + this.farmerRecords.length);
@@ -153,7 +150,7 @@ export class ForestOfficerInspectionComponent implements OnInit {
 			  console.log(" length of farmer records " + response.farmerRecords.length);
              if(this.farmerRecords!=null && this.farmerRecords.length > 0 ){
                this.noSearchResults= false;
-			   //this.isRequestInspected = true;
+			   this.isNotUpdated = true;
              }else{
                this.noSearchResults = true;
              }
@@ -194,11 +191,6 @@ export class ForestOfficerInspectionComponent implements OnInit {
 						console.log("noOfDays"+noOfDays) // 31
 						j= j++;
 					}
-					
-					//console.log(a.diff(b, 'minutes')) // 44700
-					//console.log(a.diff(b, 'hours')) // 745
-					//console.log("No of Days"+(a.diff(b, 'days'))) // 31
-					//console.log(a.diff(b, 'weeks')) // 4
 				}
 	  
 			 console.log("farmer records " + this.farmerRecords.length);
@@ -207,7 +199,7 @@ export class ForestOfficerInspectionComponent implements OnInit {
 			  console.log(" length of farmer records " + response.farmerRecords.length);
              if(this.farmerRecords!=null && this.farmerRecords.length > 0 ){
                this.noSearchResults= false;
-			   //this.isRequestInspected = true;
+			    this.isNotUpdated = true;
              }else{
                this.noSearchResults = true;
              }
@@ -221,7 +213,7 @@ export class ForestOfficerInspectionComponent implements OnInit {
   }
  
  UpdateFirstYrReq(){
-	console.log("inside update function");	
+	console.log("inside UpdateFirstYrReq function");	
 	
 	 this.farmerRecord = <FarmerRecord>this.farmerReqForm.value;
 	console.log("this.farmerRecord values are:" + JSON.stringify(this.farmerReqForm.value));
@@ -249,8 +241,71 @@ export class ForestOfficerInspectionComponent implements OnInit {
 			this.isNotUpdated = true;
 		  }
         });
-		
-	
   }
- 
+}
+
+
+UpdateSecondYrReq(){
+	console.log("inside UpdateSecondYrReq function");	
+	
+	 this.farmerRecord = <FarmerRecord>this.farmerReqForm.value;
+	console.log("this.farmerRecord values are:" + JSON.stringify(this.farmerReqForm.value));
+	// for (let farmerRecord of this.farmerRecords) {   
+	//	console.log("length are:" +  this.farmerRecords.length );
+		console.log("No of seeds survided is:" +  this.farmerRecord.NoSeedSurved );
+	//	console.log("LnRecId:" +  farmerRecord.LnRecId );
+    //}
+	this.farmerRecords[0].ReqStatus="UpdatedByInsp"	;
+	this.farmerRecords[0].inspectionCompletedForYear=2;
+	this.farmerRecords[0].NoSeedSurved=this.farmerRecord.NoSeedSurved;
+	this.updatedRecords =  this.farmerRecords.filter(
+	(rec) => rec.ReqStatus=="UpdatedByInsp");
+	console.log("Approved records are" + this.updatedRecords.length);
+	this.manageFarmerRecordsService.updateNumberOfSeedServiced(this.updatedRecords)
+	.subscribe(
+        response => {
+          console.log("res received addFarmerRecord service" + JSON.stringify(response));
+
+          if (response !=null && response.success) {
+			this.isUpdated = true;
+			this.isNotUpdated = false;
+          }else{
+			this.isUpdated = false;
+			this.isNotUpdated = true;
+		  }
+        });
+  }
+}
+
+
+UpdateThirdYrReq(){
+	console.log("inside UpdateThirdYrReq function");	
+	
+	 this.farmerRecord = <FarmerRecord>this.farmerReqForm.value;
+	console.log("this.farmerRecord values are:" + JSON.stringify(this.farmerReqForm.value));
+	// for (let farmerRecord of this.farmerRecords) {   
+	//	console.log("length are:" +  this.farmerRecords.length );
+		console.log("No of seeds survided is:" +  this.farmerRecord.NoSeedSurved );
+	//	console.log("LnRecId:" +  farmerRecord.LnRecId );
+    //}
+	this.farmerRecords[0].ReqStatus="UpdatedByInsp"	;
+	this.farmerRecords[0].inspectionCompletedForYear=3;
+	this.farmerRecords[0].NoSeedSurved=this.farmerRecord.NoSeedSurved;
+	this.updatedRecords =  this.farmerRecords.filter(
+	(rec) => rec.ReqStatus=="UpdatedByInsp");
+	console.log("Approved records are" + this.updatedRecords.length);
+	this.manageFarmerRecordsService.updateNumberOfSeedServiced(this.updatedRecords)
+	.subscribe(
+        response => {
+          console.log("res received addFarmerRecord service" + JSON.stringify(response));
+
+          if (response !=null && response.success) {
+			this.isUpdated = true;
+			this.isNotUpdated = false;
+          }else{
+			this.isUpdated = false;
+			this.isNotUpdated = true;
+		  }
+        });
+  }
 }
