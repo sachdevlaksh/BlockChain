@@ -298,6 +298,99 @@ console.log(response.getBody());
 });
 }); 
 
+
+/* POST API to update No of Seeds survived in Kapy*/
+router.post('/api/updateAmountProcessed', (req, res) => {
+  console.log('Inside Express api to update new land record by treasury');
+  var records = req.body; //Array of farmer records
+  console.log("list of documents" + JSON.stringify(records));
+  var documentIdsAdded = [];
+  var statusCodeTrsry=0;
+  var statusCodeDisbursement=0; 
+  kapy.find({selector:{LnRecId:records[0].LnRecId}}, function(er, result) {
+	  if (er) {
+		console.log("Error finding documents");
+	  }
+	  console.log('Found documents with LnRecId '+ records[0].LnRecId +":"+ result.docs.length);
+	  for (var i = 0; i < result.docs.length; i++) {
+		//records[i]["_id"] = result.docs[i]["_id"];
+		//records[i]["_rev"] = result.docs[i]["_rev"];
+        documentIdsAdded.push(result.docs[i].eid);
+		//console.log("rresult.docs :" +result[0]);
+		console.log("inspectionCompletedForYear :" +records[0].AmountProcessed);
+		var TrsryReq= {
+		     "$class": "org.kapy.payments.Treasury",
+			  "TreasuryRecordsId": "T"+result.docs[i].eid,
+			  "SeedlingPrice": records[0].AmountProcessed,
+			  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid",
+			  "ownerEntity": "TreasuryAdmin"
+
+		}
+		
+		console.log("TrsryReq request body :" +JSON.stringify(TrsryReq));
+
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Treasury', {
+method: 'POST',
+body: TrsryReq ,
+dataType: 'json' 
+})
+.then(function(response) {
+// get the code
+statusCodeTrsry = response.getCode();  
+    console.log("Update land record Fabric Response code : " + statusCodeTrsry);
+console.log(response.getBody());
+              
+});
+	
+	if(statusCodeTrsry=200){
+		var DisbursementReq = {   
+			
+		"$class": "org.kapy.payments.Disbursement",
+		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
+		  "treasury": "resource:org.kapy.payments.Treasury#T"++result.docs[i].eid
+		}
+		console.log("DisbursementReq request body :" +JSON.stringify(DisbursementReq));
+
+		requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Disbursement', {
+		method: 'POST',
+		body: DisbursementReq ,
+		dataType: 'json' 
+		})
+		.then(function(response) {
+		// get the code
+		statusCodeDisbursement = response.getCode();  
+			console.log("Update land record Fabric Response code : " + statusCodeDisbursement);
+		console.log(response.getBody());
+					  
+		});
+
+		if(statusCodeDisbursement=200){
+			  kapy.bulk({docs : records}, function(err, doc) {
+						if (err) {
+							console.log("Error updating records to Kapy" +err);
+							res.json({success : false, message : err+""});
+						} else{
+							console.log("success saving records to Kapy");
+						   res.json({success : true, documentIdsAdded : documentIdsAdded});
+						}				
+					});	
+
+		
+		}else{
+			res.json({success : false, message : "Failed to update Monitoring transaction in HyperLedger"});
+		}
+	}else{
+		res.json({success : false, message : "Failed to update Gok Asset in HyperLedger "});
+	}
+}
+});
+});
+
+
+
+
+
+
 /* GET API to get farmer records from KAPY using EID*/
 router.get('/api/getFarmerRecordsByEid/:id', (req, res) => {
   console.log('Inside Express api to get farmer records by eid');
@@ -336,6 +429,27 @@ kapy.find({selector:{LnRecId:req.params.id}}, function(er, result) {
 /* GET API to get farmer records from KAPY using EID*/
 router.get('/api/getFarmerRecordsByReqStatus/:id', (req, res) => {
   console.log('Inside Express api to get farmer records by ReqStatus');
+kapy.find({selector:{ReqStatus:req.params.id}}, function(er, result) {
+	  if (er) {
+		console.log("Error finding documents for ReqStatus");
+		res.json({success : false,message:"Error finding documents",farmerRecords:null});
+	  }
+	  console.log('Found documents with ReqStatus count:'+req.params.id +":"+ result.docs.length);
+/* 	  for (var i = 0; i < result.docs.length; i++) {
+		console.log('Doc:'+ JSON.stringify(result.docs[i]));
+	  } */
+	  
+	  if(result.docs.length > 0)
+			res.json({success : true, message:"Found "+result.docs.length+" documents", farmerRecords:result.docs});
+		else
+			res.json({success : true, message:"Found "+result.docs.length+" documents", farmerRecords:{}});
+	});
+});
+
+
+/* GET API to get records from KAPY using EID*/
+router.get('/api/getRecordsByReqStatus/:id', (req, res) => {
+  console.log('Inside Express api to get  records by ReqStatus for Treasury');
 kapy.find({selector:{ReqStatus:req.params.id}}, function(er, result) {
 	  if (er) {
 		console.log("Error finding documents for ReqStatus");
