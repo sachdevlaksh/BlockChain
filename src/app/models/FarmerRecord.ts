@@ -11,6 +11,7 @@ export class FarmerRecord {
   preMutationSketch: string;
   isFarmerRecApproved : boolean;
   eid:number;
+  AmountProcessed:number;
   inspectionCompletedForYear:number;
   SubmittedDt:Date;
   ReqStatus:string;
