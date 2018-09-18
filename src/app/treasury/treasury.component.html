@@ -99,6 +99,7 @@
 <div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
 
+<div *ngIf= "fetchThirdYrRequest" >
 <form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="UpdateThirdYrReq(form)">
 <table class="table table-striped">
   <thead>
