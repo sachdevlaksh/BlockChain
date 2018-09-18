@@ -347,7 +347,7 @@ console.log(response.getBody());
 			
 		"$class": "org.kapy.payments.Disbursement",
 		  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
-		  "treasury": "resource:org.kapy.payments.Treasury#T"++result.docs[i].eid
+		  "treasury": "resource:org.kapy.payments.Treasury#T"+result.docs[i].eid
 		}
 		console.log("DisbursementReq request body :" +JSON.stringify(DisbursementReq));
 
