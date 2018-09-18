@@ -322,7 +322,7 @@ router.post('/api/updateAmountProcessed', (req, res) => {
 		     "$class": "org.kapy.payments.Treasury",
 			  "TreasuryRecordsId": "T"+result.docs[i].eid,
 			  "SeedlingPrice": records[0].AmountProcessed,
-			  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid",
+			  "landrecord": "resource:org.kapy.payments.LandRecord#"+result.docs[i].eid,
 			  "ownerEntity": "TreasuryAdmin"
 
 		}
