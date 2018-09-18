@@ -1,0 +1,137 @@
+<div  align="center">
+    <h3>KAPY- Update Disbursement details by Treasury</h3>
+  </div>
+ <div *ngIf="isRequestDisbursed; then SearchForDisbuesement" ></div>
+   <ng-template #SearchForDisbuesement>
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">Search Criteria</h1>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+     <!-- <div class="col-md-4">
+        <label for="LnRecId" class="control-label required">LandRecord Id :</label>
+        <input type="text" id="LnRecId" name="LnRecId"  [(ngModel)]="LnRecId"  />
+      </div> -->
+      <div class="col-md-4">
+      <button type="submit" class="btn btn-primary" (click)= "search1()">Search for 1st year request</button>
+      </div>
+	  
+	   <div class="col-md-4">
+      <button type="submit" class="btn btn-primary" (click)= "search2()">Search for 2nd year request</button>
+      </div>
+	  
+	   <div class="col-md-4">
+      <button type="submit" class="btn btn-primary" (click)= "search3()">Search for 3rd year request</button>
+      </div>
+	  
+    </div>
+    </div>  
+    </div>
+<!--Search results of the farmerReq records for approval -->
+<div *ngIf= "fetchFirstYrRequest" >
+<form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="UpdateFirstYrReq(form)">
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <th>Enrollment ID</th>
+          <th>LandReord Id</th>
+          <th>Area Of Land </th>
+		  <th>No of Seeds Survived</th>
+		  <th>Amount Processed </th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let farmerReq of farmerRecords">
+         
+		  <td>{{farmerReq.eid}}</td>
+          <td>{{farmerReq.LnRecId}}</td>
+          <td>{{farmerReq.AreaOfLand}}</td>
+          <td>{{farmerReq.NoSeedSurved}}</td>
+		  <td> <input type="number" id="AmountProcessed" formControlName="AmountProcessed" class="text1" /></td>	  
+      </tr>
+  </tbody>
+</table> 
+  <div *ngIf='!noFirstYrSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!isUpdated'>
+    <button type="submit" class="btn btn-success" >Update</button>
+	   </div>
+    </div>
+
+</form>
+</div>
+<div *ngIf='noFirstYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
+<div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
+
+<div *ngIf= "fetchSecondYrRequest" >
+<form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="UpdateSecondYrReq(form)">
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <th>Enrollment ID</th>
+          <th>LandReord Id</th>
+          <th>Area Of Land </th>
+          <th>No of Seeds Survived</th>
+		  <th>Amount Processed </th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let farmerReq of farmerRecords">
+         
+		  <td>{{farmerReq.eid}}</td>
+          <td>{{farmerReq.LnRecId}}</td>
+          <td>{{farmerReq.AreaOfLand}}</td>
+         <td>{{farmerReq.NoSeedSurved}}</td>
+		  <td> <input type="number" id="AmountProcessed" formControlName="AmountProcessed" class="text1" /></td>	  
+      </tr>
+  </tbody>
+</table> 
+  <div *ngIf='!noSecondYrSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!isUpdated'>
+    <button type="submit" class="btn btn-success" >Update</button>
+	   </div>
+    </div>
+
+</form>
+</div>
+<div *ngIf='noSecondYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
+<div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
+
+<div *ngIf= "fetchThirdYrRequest" >
+<form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="UpdateThirdYrReq(form)">
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <th>Enrollment ID</th>
+          <th>LandReord Id</th>
+          <th>Area Of Land </th>
+         <th>No of Seeds Survived</th>
+		  <th>Amount Processed </th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let farmerReq of farmerRecords">
+         
+		  <td>{{farmerReq.eid}}</td>
+          <td>{{farmerReq.LnRecId}}</td>
+          <td>{{farmerReq.AreaOfLand}}</td>
+		  <td>{{farmerReq.NoSeedSurved}}</td>
+		  <td> <input type="number" id="AmountProcessed" formControlName="AmountProcessed" class="text1" /></td>		  
+      </tr>
+  </tbody>
+</table> 
+  <div *ngIf='!noThirdYrSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!isUpdated'>
+    <button type="submit" class="btn btn-success" >Update</button>
+	   </div>
+    </div>
+
+</form>
+</div>
+<div *ngIf='noThirdYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
+<div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
+
+</ng-template>
