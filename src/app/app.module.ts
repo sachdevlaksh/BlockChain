@@ -21,6 +21,7 @@ import { LoginAuthenticationService } from './services/login-authentication.serv
 import { VerifyFarmerRecordService } from './services/verify-farmer-record.service';
 import { InspectorVerificationService } from './services/inspector-verification.service';
 import {AllTransactionsService} from './services/all-transactions.service';
+import {TreasuryService} from './services/treasury.service';
 //import { ApiService } from './services/api.service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,7 +56,7 @@ import { AllTransactionsComponent } from './all-transactions/all-transactions.co
     AppRoutingModule
 
   ],
-  providers: [AuthGuard,ManageFarmerRecordService,NurserySurveyDataService,LoginAuthenticationService,VerifyFarmerRecordService,InspectorVerificationService,AllTransactionsService],
+  providers: [AuthGuard,ManageFarmerRecordService,NurserySurveyDataService,LoginAuthenticationService,VerifyFarmerRecordService,InspectorVerificationService,AllTransactionsService,TreasuryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
