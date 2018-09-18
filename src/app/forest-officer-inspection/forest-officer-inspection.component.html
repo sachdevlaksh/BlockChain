@@ -52,7 +52,7 @@
       </tr>
   </tbody>
 </table> 
-  <div *ngIf='!noSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!noFirstYrSearchResults' class="col-md-offset-4 col-md-4">
   <div *ngIf='!isUpdated'>
     <button type="submit" class="btn btn-success" >Update</button>
 	   </div>
@@ -60,7 +60,7 @@
 
 </form>
 </div>
-<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='noFirstYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
 <div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
 
@@ -87,7 +87,7 @@
       </tr>
   </tbody>
 </table> 
-  <div *ngIf='!noSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!noSecondYrSearchResults' class="col-md-offset-4 col-md-4">
   <div *ngIf='!isUpdated'>
     <button type="submit" class="btn btn-success" >Update</button>
 	   </div>
@@ -95,7 +95,7 @@
 
 </form>
 </div>
-<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='noSecondYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
 <div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
 
@@ -122,7 +122,7 @@
       </tr>
   </tbody>
 </table> 
-  <div *ngIf='!noSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!noThirdYrSearchResults' class="col-md-offset-4 col-md-4">
   <div *ngIf='!isUpdated'>
     <button type="submit" class="btn btn-success" >Update</button>
 	   </div>
@@ -130,7 +130,7 @@
 
 </form>
 </div>
-<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='noThirdYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
 <div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
 
