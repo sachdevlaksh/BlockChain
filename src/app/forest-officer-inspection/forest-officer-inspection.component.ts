@@ -242,7 +242,7 @@ export class ForestOfficerInspectionComponent implements OnInit {
 		  }
         });
   }
-}
+
 
 
 UpdateSecondYrReq(){
@@ -275,7 +275,7 @@ UpdateSecondYrReq(){
 		  }
         });
   }
-}
+
 
 
 UpdateThirdYrReq(){
