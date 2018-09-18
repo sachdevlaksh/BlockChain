@@ -21,7 +21,9 @@ export class TreasuryComponent implements OnInit {
   fetchFirstYrRequest : boolean = false;
   fetchSecondYrRequest : boolean = false;
   fetchThirdYrRequest : boolean = false;
-  noSearchResults : boolean = false;
+  noFirstYrSearchResults : boolean = false;
+  noSecondYrSearchResults : boolean = false;
+  noThirdYrSearchResults : boolean = false;
   isNotUpdated : boolean = false;
   isUpdated : boolean = false;
   farmerRecords : FarmerRecord[];
@@ -37,7 +39,9 @@ export class TreasuryComponent implements OnInit {
                this.fetchFirstYrRequest = true;
 			   this.fetchSecondYrRequest = true;
 			   this.fetchThirdYrRequest = true;
-               this.noSearchResults= false;
+               this.noFirstYrSearchResults= false;
+			   this.noSecondYrSearchResults= false;
+			   this.noThirdYrSearchResults= false;
 			   //console.log("inside OnInit function");
 			    //console.log("isFarmerRecApproved from farmerRecords :" + this.farmerRecords.isFarmerRecApproved);
 				// console.log("isFarmerRecApproved from approvedRecords:" + this.approvedRecords.isFarmerRecApproved);
@@ -96,15 +100,17 @@ export class TreasuryComponent implements OnInit {
 						// 			 console.log(" message farmer records " + response.message);
 			  console.log(" length of farmer records " + response.farmerRecords.length);
              if(this.farmerRecords!=null && this.farmerRecords.length > 0 ){
-               this.noSearchResults= false;
+               this.noFirstYrSearchResults= false;
 			   this.isNotUpdated = true;
 			   //this.isRequestDisbursed = true;
              }else{
-               this.noSearchResults = true;
+               this.noFirstYrSearchResults = true;
              }
               this.fetchFirstYrRequest = true;
 			  this.fetchSecondYrRequest = false; 			  
 			  this.fetchThirdYrRequest = false; 
+			   this.noSecondYrSearchResults= false;
+			   this.noThirdYrSearchResults= false;
 			  this.isNotUpdated = false;
 			  this.isUpdated = false;
             }
@@ -148,14 +154,16 @@ export class TreasuryComponent implements OnInit {
 						 			 console.log(" message farmer records " + response.message);
 			  console.log(" length of farmer records " + response.farmerRecords.length);
              if(this.farmerRecords!=null && this.farmerRecords.length > 0 ){
-               this.noSearchResults= false;
+               this.noSecondYrSearchResults= false;
 			   this.isNotUpdated = true;
              }else{
-               this.noSearchResults = true;
+               this.noSecondYrSearchResults = true;
              }
               this.fetchFirstYrRequest = false;
 			  this.fetchSecondYrRequest = true; 			  
 			  this.fetchThirdYrRequest = false; 
+			   this.noFirstYrSearchResults= false;
+			   this.noThirdYrSearchResults= false;
               this.isNotUpdated = false;
 			  this.isUpdated = false;
             }
@@ -197,14 +205,16 @@ export class TreasuryComponent implements OnInit {
 						 			 console.log(" message farmer records " + response.message);
 			  console.log(" length of farmer records " + response.farmerRecords.length);
              if(this.farmerRecords!=null && this.farmerRecords.length > 0 ){
-               this.noSearchResults= false;
+               this.noThirdYrSearchResults= false;
 			    this.isNotUpdated = true;
              }else{
-               this.noSearchResults = true;
+               this.noThirdYrSearchResults = true;
              }
               this.fetchFirstYrRequest = false;
 			  this.fetchSecondYrRequest = false; 			  
-			  this.fetchThirdYrRequest = true;     
+			  this.fetchThirdYrRequest = true;    
+				this.noFirstYrSearchResults= false;
+			   this.noSecondYrSearchResults= false;		  
               this.isNotUpdated = false;
 			  this.isUpdated = false;
             }
