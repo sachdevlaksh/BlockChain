@@ -15,10 +15,10 @@ const routes: Routes = [
   { path: 'farmerApplication', component: FarmerApplicationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'approveFarmerApplicationByNursery', component: NurseryComponent},
-  { path: 'verifyAndReleaseFundByTreasury', component: TreasuryComponent,canActivate: [AuthGuard] },
-  { path: 'viewFarmerRecord/:id', component: ViewFarmerRecordComponent },
+  { path: 'verifyAndReleaseFundByTreasury', component: TreasuryComponent},
+  { path: 'viewFarmerRecord/:id', component: ViewFarmerRecordComponent},
   { path: 'verifyAndUpdateNoOfSeedSurvived',component:ForestOfficerInspectionComponent},
-  { path: 'AllTransactions', component: AllTransactionsComponent },
+  { path: 'AllTransactions', component: AllTransactionsComponent},
   { path: '', redirectTo: '/login',pathMatch:'full'},
   { path: '**', pathMatch:'full', redirectTo: '/login'}
   
