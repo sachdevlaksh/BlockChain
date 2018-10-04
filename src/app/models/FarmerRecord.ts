@@ -18,7 +18,6 @@ export class FarmerRecord {
   constructor() { }
 
 }
-
 export class Bank {
   AcNo: number;
   IfscCd:string;
