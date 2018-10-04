@@ -1,6 +1,25 @@
-<div  align="center">
+<html>
+<head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+    body{
+        width:100%;
+        height: 100%;
+        background-image: url("/../images/Treasury.jpg");
+        background-position: inherit;
+        background-size: 100% 150%;
+        background-repeat: no-repeat;
+
+    }
+    .input-group {
+     margin-top: 10px;
+    }
+    </style>
+</head>
+<body>
+<div >
     <h3>KAPY- Update Disbursement details by Treasury</h3>
-  </div>
+
  <div *ngIf="isRequestDisbursed; then SearchForDisbuesement" ></div>
    <ng-template #SearchForDisbuesement>
   <div class="panel panel-default">
@@ -38,7 +57,8 @@
           <th>LandReord Id</th>
           <th>Area Of Land </th>
 		  <th>No of Seeds Survived</th>
-		  <th>Amount Processed </th>
+		  <th>Amount for SeedSampling </th>
+		  
       </tr>
   </thead>
   <tbody>
@@ -48,21 +68,26 @@
           <td>{{farmerReq.LnRecId}}</td>
           <td>{{farmerReq.AreaOfLand}}</td>
           <td>{{farmerReq.NoSeedSurved}}</td>
-		  <td> <input type="number" id="AmountProcessed" formControlName="AmountProcessed" class="text1" /></td>	  
+		  <td> <input type="number" id="SeedlingPrice" formControlName="SeedlingPrice" class="text1" /></td>	  
       </tr>
   </tbody>
 </table> 
-  <div *ngIf='!noSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!noFirstYrSearchResults' class="col-md-offset-4 col-md-4">
   <div *ngIf='!isUpdated'>
     <button type="submit" class="btn btn-success" >Update</button>
 	   </div>
     </div>
 
 </form>
+<div *ngIf='noFirstYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='isUpdated' style='color:green;' align='center'>
+<div *ngFor= "let farmerReq of farmerRecords">
+<strong>Amount  {{farmerReq.NoSeedSurved*30}} has been released!</strong>
 </div>
-<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
-<div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
+</div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
+</div>
+
 
 <div *ngIf= "fetchSecondYrRequest" >
 <form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="UpdateSecondYrReq(form)">
@@ -87,17 +112,22 @@
       </tr>
   </tbody>
 </table> 
-  <div *ngIf='!noSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!noSecondYrSearchResults' class="col-md-offset-4 col-md-4">
   <div *ngIf='!isUpdated'>
     <button type="submit" class="btn btn-success" >Update</button>
 	   </div>
     </div>
 
 </form>
+<div *ngIf='noSecondYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='isUpdated' style='color:green;' align='center'>
+<div *ngFor= "let farmerReq of farmerRecords">
+<strong>Amount  {{farmerReq.NoSeedSurved*40}} has been released!</strong>
 </div>
-<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
-<div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
+</div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
+</div>
+
 
 <div *ngIf= "fetchThirdYrRequest" >
 <form class="form-horizontal" [formGroup]="farmerReqForm" (ngSubmit)="UpdateThirdYrReq(form)">
@@ -122,16 +152,23 @@
       </tr>
   </tbody>
 </table> 
-  <div *ngIf='!noSearchResults' class="col-md-offset-4 col-md-4">
+  <div *ngIf='!noThirdYrSearchResults' class="col-md-offset-4 col-md-4">
   <div *ngIf='!isUpdated'>
     <button type="submit" class="btn btn-success" >Update</button>
 	   </div>
     </div>
 
 </form>
+<div *ngIf='noThirdYrSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
+<div *ngIf='isUpdated' style='color:green;' align='center'>
+<div *ngFor= "let farmerReq of farmerRecords">
+<strong>Amount  {{farmerReq.NoSeedSurved*40}} has been released!</strong>
 </div>
-<div *ngIf='noSearchResults' style='color:red;' align='center'><strong>No matching results found !</strong></div>
-<div *ngIf='isUpdated' style='color:green;' align='center'><strong>Updated successfully!</strong></div>
+</div>
 <div *ngIf='isNotUpdated' style='color:red;' align='center'><strong>Failed to Update the record!</strong></div>
+</div>
 
 </ng-template>
+  </div>
+</body>
+</html>
