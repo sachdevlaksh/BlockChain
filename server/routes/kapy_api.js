@@ -196,9 +196,10 @@ console.log(response.getBody());
 		console.log("Document matched ",result.docs[i].eid);
 		documentIdsAdded.push(result.docs[i].eid);
 		break;
-	}else{
-		res.json({success : false, message : "Failed to update Nursery Asset in HyperLedger "});
 	}
+	//else{
+	//	res.json({success : false, message : "Failed to update Nursery Asset in HyperLedger "});
+	//}
 }
 });
 
