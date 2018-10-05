@@ -91,7 +91,7 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
 
 console.log("Farmer request body :" +JSON.stringify(FarmerReq));
 
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Registration', {
+requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/LandRecord', {
 method: 'POST',
 body: FarmerReq ,
 dataType: 'json' 
