@@ -200,7 +200,7 @@ console.log(response.getBody());
 	//else{
 	//	res.json({success : false, message : "Failed to update Nursery Asset in HyperLedger "});
 	//}
-}
+//}
 });
 
  kapy.bulk({docs : records}, function(err, doc) 
