@@ -91,7 +91,7 @@ router.post('/api/addFarmerRecordKapy', (req, res) => {
 
 console.log("Farmer request body :" +JSON.stringify(FarmerReq));
 
-requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/LandRecord', {
+requestify.request('http://ec2-3-87-238-243.compute-1.amazonaws.com:3000/api/LandRecord', {
 method: 'POST',
 body: FarmerReq ,
 dataType: 'json' 
@@ -181,7 +181,7 @@ console.log(response.getBody());
 //		}
 //		console.log("VerificationReq request body :" +JSON.stringify(VerificationReq));
 
-		requestify.request('http://ec2-52-90-144-179.compute-1.amazonaws.com:3000/api/Verification', {
+		requestify.request('http://ec2-3-87-238-243.compute-1.amazonaws.com:3000/api/Verification', {
 		method: 'POST',
 		body: VerificationReq ,
 		dataType: 'json' 
